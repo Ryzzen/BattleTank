@@ -3,6 +3,20 @@
 
 #include "TankAIController.h"
 
+void ATankAIController::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+
+	auto Tank = GetControlledTank();
+	auto PlayerTank = GetPlayerTank();
+
+	if (!Tank || !PlayerTank) { return; }
+
+	FVector HitLocation;
+
+	Tank->AimAt(PlayerTank->GetActorLocation());
+}
+
 ATank* ATankAIController::GetControlledTank() const
 {
 	return Cast<ATank>(GetPawn());
