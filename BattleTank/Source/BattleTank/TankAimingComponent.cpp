@@ -16,13 +16,27 @@ UTankAimingComponent::UTankAimingComponent()
 
 void UTankAimingComponent::AimAt(FVector &Target, float LaunchSpeed) const
 {
-	if (!Barrel)
-		return;
+	if (!Barrel) { return; }
 
-	UE_LOG(LogTemp, Warning, TEXT("%s: Shoots from %s to %s"),
-		*(GetOwner()->GetName()),
-		*(Barrel->GetComponentLocation().ToString()),
-		*(Target.ToString()));
+	FVector OutLaunchVelocity;
+	FVector StartLocation = Barrel->GetSocketLocation(FName("FiringPoint"));
+
+	if (UGameplayStatics::SuggestProjectileVelocity(
+		this,
+		OutLaunchVelocity,
+		StartLocation,
+		Target,
+		LaunchSpeed,
+		false,
+		0.f,
+		0.f,
+		ESuggestProjVelocityTraceOption::DoNotTrace
+	)) {
+		auto AimDirection = OutLaunchVelocity.GetSafeNormal();
+
+		UE_LOG(LogTemp, Warning, TEXT("Aiming at: %s"),
+			*(AimDirection.ToString()));
+	}
 }
 
 // Called when the game starts
