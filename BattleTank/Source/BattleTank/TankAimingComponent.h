@@ -2,6 +2,7 @@
 
 #pragma once
 
+#include "BattleTank/TankBarrel.h"
 #include "Kismet/GameplayStatics.h"
 #include "Tank.h"
 #include "CoreMinimal.h"
@@ -9,6 +10,7 @@
 #include "TankAimingComponent.generated.h"
 
 class ATank;
+class UTankBarrel;
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class BATTLETANK_API UTankAimingComponent : public UActorComponent
@@ -19,10 +21,10 @@ public:
 	// Sets default values for this component's properties
 	UTankAimingComponent();
 
-	void SetBarrelReference(UStaticMeshComponent* BarrelToSet);
+	void SetBarrelReference(UTankBarrel* BarrelToSet);
 
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
-	void AimAt(FVector& Target, float LaunchSpeed) const;
+	void AimAt(FVector& Target, float LaunchSpeed);
 
 protected:
 	// Called when the game starts
@@ -30,5 +32,6 @@ protected:
 	
 
 private:
-	UStaticMeshComponent* Barrel = nullptr;
+	UTankBarrel* Barrel = nullptr;
+	void MoveBarrel(const FVector& AimDirection);
 };
