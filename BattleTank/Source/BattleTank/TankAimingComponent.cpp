@@ -37,10 +37,8 @@ void UTankAimingComponent::AimAt(FVector &Target, float LaunchSpeed)
 		ESuggestProjVelocityTraceOption::DoNotTrace
 	);
 	
-	UE_LOG(LogTemp, Warning, TEXT("Socket loc: %s"), *(StartLocation.ToString()));
 	if (HasAimSolution) {
 		FVector AimDirection = OutLaunchVelocity.GetSafeNormal();
-		UE_LOG(LogTemp, Warning, TEXT("Solution"));
 		MoveBarrel(AimDirection);	
 	}
 }
@@ -64,12 +62,4 @@ void UTankAimingComponent::MoveBarrel(const FVector& AimDirection)
 void UTankAimingComponent::SetBarrelReference(UTankBarrel* BarrelToSet)
 {
 	Barrel = BarrelToSet;
-}
-
-// Called every frame
-void UTankAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
-{
-	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-
-	// ...
 }

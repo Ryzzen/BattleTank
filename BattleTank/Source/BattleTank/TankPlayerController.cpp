@@ -54,9 +54,7 @@ bool ATankPlayerController::GetSightRayHitLocation(FVector &HitLocation) const
 	FVector AimDirection;
 
 	GetAimDirection(AimDirection);
-	GetAimVectorHitLocation(HitLocation, AimDirection);
-
-	return false;
+	return (GetAimVectorHitLocation(HitLocation, AimDirection));
 }
 
 ATank* ATankPlayerController::GetControlledTank() const
