@@ -52,7 +52,7 @@ void UTankAimingComponent::MoveBarrel(const FVector& AimDirection)
 	auto AimAsRotator = AimDirection.Rotation();
 	auto DeltaRotator = AimAsRotator - BarrelRotator;
 
-	Barrel->Elevate(5.f);
+	Barrel->Elevate(DeltaRotator.Pitch);
 
 	// Get barrel
 	// if barrel => change barrel rotation to match transform
