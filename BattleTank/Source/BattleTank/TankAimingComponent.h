@@ -3,6 +3,7 @@
 #pragma once
 
 #include "BattleTank/TankBarrel.h"
+#include "BattleTank/TankTurret.h"
 #include "Kismet/GameplayStatics.h"
 #include "Tank.h"
 #include "CoreMinimal.h"
@@ -11,6 +12,7 @@
 
 class ATank;
 class UTankBarrel;
+class UTankTurret;
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class BATTLETANK_API UTankAimingComponent : public UActorComponent
@@ -22,6 +24,9 @@ public:
 	UTankAimingComponent();
 
 	void SetBarrelReference(UTankBarrel* BarrelToSet);
+	void SetTurretReference(UTankTurret* TurretToSet);
+
+
 	void AimAt(FVector& Target, float LaunchSpeed);
 
 protected:
@@ -31,5 +36,6 @@ protected:
 
 private:
 	UTankBarrel* Barrel = nullptr;
-	void MoveBarrel(const FVector& AimDirection);
+	UTankTurret* Turret = nullptr;
+	void MoveTurretSystem(const FVector& AimDirection);
 };

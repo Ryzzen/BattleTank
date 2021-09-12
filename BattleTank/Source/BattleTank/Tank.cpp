@@ -12,12 +12,15 @@ ATank::ATank()
 	TankAimingComponent = CreateDefaultSubobject<UTankAimingComponent>(FName("Aiming Component"));
 }
 
-void ATank::SetBarrelReference(UTankBarrel* BarrelToSet)
+void ATank::SetTurretSystemReference(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet)
 {
 	if (!TankAimingComponent)
 		return;
 
-	TankAimingComponent->SetBarrelReference(BarrelToSet);
+	if (BarrelToSet)
+		TankAimingComponent->SetBarrelReference(BarrelToSet);
+	if (TurretToSet)
+		TankAimingComponent->SetTurretReference(TurretToSet);
 }
 
 void ATank::AimAt(FVector HitLocation)

@@ -1,7 +1,8 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
-#include <BattleTank/TankBarrel.h>
+#include "BattleTank/TankBarrel.h"
+#include "BattleTank/TankTurret.h"
 #include <BattleTank/TankAimingComponent.h>
 #include "CoreMinimal.h"
 #include "GameFramework/Pawn.h"
@@ -9,6 +10,7 @@
 
 class UTankAimingComponent;
 class UTankBarrel;
+class UTankTurret;
 
 UCLASS()
 class BATTLETANK_API ATank : public APawn
@@ -20,7 +22,7 @@ public:
 	ATank();
 
 	UFUNCTION(BlueprintCallable, Category=Setup)
-	void SetBarrelReference(UTankBarrel* BarrelToSet);
+	void SetTurretSystemReference(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet);
 
 	void AimAt(FVector HitLocation);
 	UTankAimingComponent* TankAimingComponent = nullptr;
