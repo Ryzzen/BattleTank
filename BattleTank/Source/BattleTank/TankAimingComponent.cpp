@@ -36,8 +36,6 @@ void UTankAimingComponent::AimAt(FVector &Target, float LaunchSpeed)
 		LaunchSpeed,
 		ESuggestProjVelocityTraceOption::DoNotTrace
 	);
-	
-	UE_LOG(LogTemp, Warning, TEXT("Went here %f"), GetWorld()->TimeSeconds);
 	FVector AimDirection = OutLaunchVelocity.GetSafeNormal();
 	MoveTurretSystem(AimDirection);
 }

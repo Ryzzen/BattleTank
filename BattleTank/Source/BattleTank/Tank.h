@@ -27,6 +27,9 @@ public:
 	void AimAt(FVector HitLocation);
 	UTankAimingComponent* TankAimingComponent = nullptr;
 
+	UFUNCTION(BlueprintCallable, Category = Action)
+	void Fire();
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
