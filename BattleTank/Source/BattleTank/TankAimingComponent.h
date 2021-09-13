@@ -5,7 +5,6 @@
 #include "BattleTank/TankBarrel.h"
 #include "BattleTank/TankTurret.h"
 #include "Kismet/GameplayStatics.h"
-#include "Tank.h"
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
 #include "TankAimingComponent.generated.h"

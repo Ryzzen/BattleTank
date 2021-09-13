@@ -3,6 +3,7 @@
 #pragma once
 #include "BattleTank/TankBarrel.h"
 #include "BattleTank/TankTurret.h"
+#include "BattleTank/Projectile.h"
 #include <BattleTank/TankAimingComponent.h>
 #include "CoreMinimal.h"
 #include "GameFramework/Pawn.h"
@@ -11,6 +12,7 @@
 class UTankAimingComponent;
 class UTankBarrel;
 class UTankTurret;
+class AProjectile;
 
 UCLASS()
 class BATTLETANK_API ATank : public APawn
@@ -42,4 +44,9 @@ private:
 
 	UPROPERTY(EditAnywhere, Category = Firing)
 	float LaunchSpeed = 4000; // TODO: Playtest default value
+
+	UPROPERTY(EditAnywhere, Category = Setup)
+	TSubclassOf<AProjectile> ProjectileBluePrint;
+
+	UTankBarrel* Barrel = nullptr;
 };

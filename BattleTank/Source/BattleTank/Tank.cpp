@@ -14,26 +14,32 @@ ATank::ATank()
 
 void ATank::SetTurretSystemReference(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet)
 {
-	if (!TankAimingComponent)
-		return;
+	if (!TankAimingComponent) return;
 
-	if (BarrelToSet)
+	if (BarrelToSet) {
 		TankAimingComponent->SetBarrelReference(BarrelToSet);
+		Barrel = BarrelToSet;
+	}
 	if (TurretToSet)
 		TankAimingComponent->SetTurretReference(TurretToSet);
 }
 
 void ATank::AimAt(FVector HitLocation)
 {
-	if (!TankAimingComponent)
-		return;
+	if (!TankAimingComponent) return;
 
 	TankAimingComponent->AimAt(HitLocation, LaunchSpeed);
 }
 
 void ATank::Fire()
 {
-	UE_LOG(LogTemp, Warning, TEXT("FIIIIIRE"))
+	if (!Barrel) return;
+
+	GetWorld()->SpawnActor<AProjectile>(
+		ProjectileBluePrint,
+		Barrel->GetSocketLocation(FName("FiringPoint")),
+		Barrel->GetSocketRotation(FName("FiringPoint"))
+	);
 }
 
 // Called when the game starts or when spawned
