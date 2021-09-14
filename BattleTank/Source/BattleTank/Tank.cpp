@@ -35,11 +35,13 @@ void ATank::Fire()
 {
 	if (!Barrel) return;
 
-	GetWorld()->SpawnActor<AProjectile>(
+	auto Projectile = GetWorld()->SpawnActor<AProjectile>(
 		ProjectileBluePrint,
 		Barrel->GetSocketLocation(FName("FiringPoint")),
 		Barrel->GetSocketRotation(FName("FiringPoint"))
 	);
+
+	Projectile->LaunchProjectile(LaunchSpeed);
 }
 
 // Called when the game starts or when spawned
