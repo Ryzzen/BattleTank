@@ -10,11 +10,14 @@ void ATankAIController::Tick(float DeltaTime)
 	auto Tank = GetControlledTank();
 	auto PlayerTank = GetPlayerTank();
 
-	if (!Tank || !PlayerTank) { return; }
+	if (!Tank || !PlayerTank) return;
 
 	FVector HitLocation;
 
 	Tank->AimAt(PlayerTank->GetActorLocation());
+
+	Tank->Fire();
+//	UE_LOG(LogTemp, Warning, TEXT("fires at %s"), *(PlayerTank->GetActorLocation().ToString()));
 }
 
 ATank* ATankAIController::GetControlledTank() const
@@ -35,11 +38,4 @@ void ATankAIController::BeginPlay()
 {
 	Super::BeginPlay();
 
-	auto Tank = GetControlledTank();
-	auto Player = GetPlayerTank();
-
-	if (Player)
-		UE_LOG(LogTemp, Warning, TEXT("Player is possessin %s"), *(Player->GetName()));
-	if (Tank)
-		UE_LOG(LogTemp, Warning, TEXT("AI possessing %s"), *(Tank->GetName()));
 }

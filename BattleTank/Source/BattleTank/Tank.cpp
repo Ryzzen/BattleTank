@@ -33,7 +33,9 @@ void ATank::AimAt(FVector HitLocation)
 
 void ATank::Fire()
 {
-	if (!Barrel) return;
+	bool isReloaded = (FPlatformTime::Seconds() - LastFiredTime) > ReloadTimeInSeconds;
+	UE_LOG(LogTemp, Warning, TEXT("%d"), (FPlatformTime::Seconds() - LastFiredTime));
+	if (!Barrel || !isReloaded) return;
 
 	auto Projectile = GetWorld()->SpawnActor<AProjectile>(
 		ProjectileBluePrint,
@@ -42,6 +44,7 @@ void ATank::Fire()
 	);
 
 	Projectile->LaunchProjectile(LaunchSpeed);
+	LastFiredTime = FPlatformTime::Seconds();
 }
 
 // Called when the game starts or when spawned
