@@ -1,14 +1,16 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
+#include "BattleTank/TankMovementComponent.h"
 #include "BattleTank/TankBarrel.h"
 #include "BattleTank/TankTurret.h"
 #include "BattleTank/Projectile.h"
-#include <BattleTank/TankAimingComponent.h>
+#include "BattleTank/TankAimingComponent.h"
 #include "CoreMinimal.h"
 #include "GameFramework/Pawn.h"
 #include "Tank.generated.h"
 
+class UTankMovementComponent;
 class UTankAimingComponent;
 class UTankBarrel;
 class UTankTurret;
@@ -26,8 +28,7 @@ public:
 	UFUNCTION(BlueprintCallable, Category=Setup)
 	void SetTurretSystemReference(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet);
 
-	void AimAt(FVector HitLocation);
-	UTankAimingComponent* TankAimingComponent = nullptr;
+	void AimAt(FVector HitLocation);	
 
 	UFUNCTION(BlueprintCallable, Category = Action)
 	void Fire();
@@ -36,6 +37,10 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+	UTankAimingComponent* TankAimingComponent = nullptr;
+
+	UPROPERTY(BlueprintReadOnly)
+	UTankMovementComponent* TankMovementComponent = nullptr;
 
 private:
 
