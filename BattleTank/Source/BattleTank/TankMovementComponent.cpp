@@ -26,11 +26,3 @@ void UTankMovementComponent::IntendTurnRight(float Throw)
 	LeftTrack->SetThrottle(Throw);
 	RightTrack->SetThrottle(-Throw);
 }
-
-void UTankMovementComponent::IntendTurnLeft(float Throw)
-{
-	if (!LeftTrack || !RightTrack) { return; }
-
-	LeftTrack->SetThrottle(-Throw);
-	RightTrack->SetThrottle(Throw);
-}
