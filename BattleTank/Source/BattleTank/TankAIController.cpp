@@ -14,9 +14,13 @@ void ATankAIController::Tick(float DeltaTime)
 
 	FVector HitLocation;
 
-	Tank->AimAt(PlayerTank->GetActorLocation());
+	// moving part
+	MoveToActor(PlayerTank, AcceptanceRadius);
 
+	// Aiming part
+	Tank->AimAt(PlayerTank->GetActorLocation());
 	Tank->Fire();
+
 //	UE_LOG(LogTemp, Warning, TEXT("fires at %s"), *(PlayerTank->GetActorLocation().ToString()));
 }
 
