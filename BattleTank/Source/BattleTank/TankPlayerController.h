@@ -28,9 +28,12 @@ public:
 	UPROPERTY(EditDefaultsOnly)
 	float ShootingRange = 100000;
 
+protected:
+	UFUNCTION(BlueprintCallable, Category = Setup)
+	ATank* GetControlledTank() const;
+
 private:
 	void AimTowardsCrosshair();
-	ATank* GetControlledTank() const;
 	bool GetSightRayHitLocation(FVector& HitLocation) const;
 	bool GetAimDirection(FVector& AimDirection) const;
 	bool GetAimVectorHitLocation(FVector& HitLocation, FVector AimDirection) const;
