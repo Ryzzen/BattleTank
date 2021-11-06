@@ -21,6 +21,12 @@ void UTankAimingComponent::BeginPlay()
 }
 
 
+void UTankAimingComponent::Initialise(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet)
+{
+	Barrel = BarrelToSet;
+	Turret = TurretToSet;
+}
+
 void UTankAimingComponent::AimAt(FVector &Target, float LaunchSpeed)
 {
 	if (!Barrel) { return; }
@@ -51,15 +57,4 @@ void UTankAimingComponent::MoveTurretSystem(const FVector& AimDirection)
 
 	Barrel->Elevate(DeltaRotator.Pitch);
 	Turret->Rotate(DeltaRotator.Yaw);
-}
-
-
-void UTankAimingComponent::SetBarrelReference(UTankBarrel* BarrelToSet)
-{
-	Barrel = BarrelToSet;
-}
-
-void UTankAimingComponent::SetTurretReference(UTankTurret* TurretToSet)
-{
-	Turret = TurretToSet;
 }

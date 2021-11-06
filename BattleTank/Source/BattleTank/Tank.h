@@ -13,7 +13,6 @@
 class UTankMovementComponent;
 class UTankAimingComponent;
 class UTankBarrel;
-class UTankTurret;
 class AProjectile;
 
 UCLASS()
@@ -25,8 +24,7 @@ public:
 	// Sets default values for this pawn's properties
 	ATank();
 
-	UFUNCTION(BlueprintCallable, Category=Setup)
-	void SetTurretSystemReference(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet);
+	void BeginPlay();
 
 	void AimAt(FVector HitLocation);	
 
@@ -34,16 +32,11 @@ public:
 	void Fire();
 
 protected:
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
 
 	UPROPERTY(BlueprintReadOnly)
 	UTankAimingComponent* TankAimingComponent = nullptr;
 
 private:
-
-	// Called to bind functionality to input
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	UPROPERTY(EditDefaultsOnly, Category = Firing)
 	float LaunchSpeed = 4000; // TODO: Playtest default value
