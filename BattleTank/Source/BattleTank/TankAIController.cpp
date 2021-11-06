@@ -10,8 +10,7 @@ void ATankAIController::Tick(float DeltaTime)
 	auto Tank = GetControlledTank();
 	auto PlayerTank = GetPlayerTank();
 
-	if (!Tank || !PlayerTank) return;
-
+	if (!ensure(Tank && PlayerTank)) return;
 	FVector HitLocation;
 
 	// moving part
@@ -33,7 +32,7 @@ ATank* ATankAIController::GetPlayerTank() const
 {
 	auto Player = GetWorld()->GetFirstPlayerController();
 
-	if (Player)
+	if (ensure(Player))
 		return Cast<ATank>(Player->GetPawn());
 	return nullptr;
 }
