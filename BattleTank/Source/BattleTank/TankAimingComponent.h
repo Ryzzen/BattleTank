@@ -12,6 +12,7 @@
 class ATank;
 class UTankBarrel;
 class UTankTurret;
+class UTankAimingComponent;
 
 UENUM()
 enum class EFiringState : uint8 {

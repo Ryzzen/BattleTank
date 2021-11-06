@@ -3,9 +3,12 @@
 #pragma once
 
 #include "Tank.h"
+#include "TankAimingComponent.h"
 #include "CoreMinimal.h"
 #include "GameFramework/PlayerController.h"
 #include "TankPlayerController.generated.h"
+
+class UTankAimingComponent;
 
 /**
  * 
@@ -29,6 +32,9 @@ public:
 	float ShootingRange = 100000;
 
 protected:
+	UFUNCTION(BlueprintImplementableEvent, Category = "Setup")
+	void FoundAimingComponent(UTankAimingComponent* AimingCompRef);
+
 	UFUNCTION(BlueprintCallable, Category = Setup)
 	ATank* GetControlledTank() const;
 
