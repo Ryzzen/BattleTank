@@ -2,10 +2,12 @@
 
 #pragma once
 
-#include "Tank.h"
+#include "TankAimingComponent.h"
 #include "CoreMinimal.h"
 #include "AIController.h"
 #include "TankAIController.generated.h"
+
+class UTankAimingComponent;
 
 /**
  * 
@@ -16,13 +18,10 @@ class BATTLETANK_API ATankAIController : public AAIController
 	GENERATED_BODY()
 	
 public:
-	ATank* GetControlledTank() const;
 
 private:
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaTime) override;
-
-	ATank* GetPlayerTank() const;
 
 	float AcceptanceRadius = 3000;
 };
