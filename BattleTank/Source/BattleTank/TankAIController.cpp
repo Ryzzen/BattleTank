@@ -8,7 +8,9 @@ void ATankAIController::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 
 	auto PlayerTank = GetWorld()->GetFirstPlayerController()->GetPawn();
-	auto AimingComponent = GetPawn()->FindComponentByClass<UTankAimingComponent>();
+	auto Tank = GetPawn();
+	if (!ensure(Tank)) return;
+	auto AimingComponent = Tank->FindComponentByClass<UTankAimingComponent>();
 
 	if (!ensure(AimingComponent && PlayerTank)) return;
 	FVector HitLocation;
@@ -18,7 +20,7 @@ void ATankAIController::Tick(float DeltaTime)
 
 	// Aiming part
 	AimingComponent->AimAt(PlayerTank->GetActorLocation());
-	// Tank->Fire();
+	AimingComponent->Fire();
 
 //	UE_LOG(LogTemp, Warning, TEXT("fires at %s"), *(PlayerTank->GetActorLocation().ToString()));
 }

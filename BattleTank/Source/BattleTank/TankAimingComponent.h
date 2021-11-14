@@ -2,6 +2,7 @@
 
 #pragma once
 
+#include "Projectile.h"
 #include "BattleTank/TankBarrel.h"
 #include "BattleTank/TankTurret.h"
 #include "Kismet/GameplayStatics.h"
@@ -9,10 +10,10 @@
 #include "Components/ActorComponent.h"
 #include "TankAimingComponent.generated.h"
 
-class ATank;
 class UTankBarrel;
 class UTankTurret;
 class UTankAimingComponent;
+class AProjectile;
 
 UENUM()
 enum class EFiringState : uint8 {
@@ -35,6 +36,9 @@ public:
 
 	void AimAt(FVector Target);
 
+	UFUNCTION(BlueprintCallable, Category = Action)
+	void Fire();
+
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
@@ -44,11 +48,17 @@ protected:
 
 
 private:
+	void MoveTurretSystem(const FVector& AimDirection);
+
 	UTankBarrel* Barrel = nullptr;
 	UTankTurret* Turret = nullptr;
 
 	UPROPERTY(EditDefaultsOnly, Category = Firing)
 	float LaunchSpeed = 4000; // TODO: Playtest default value
 
-	void MoveTurretSystem(const FVector& AimDirection);
+	UPROPERTY(EditDefaultsOnly, Category = Setup)
+	TSubclassOf<AProjectile> ProjectileBluePrint;
+
+	float ReloadTimeInSeconds = 3.f;
+	double LastFiredTime = 0;
 };

@@ -58,3 +58,19 @@ void UTankAimingComponent::MoveTurretSystem(const FVector& AimDirection)
 	Barrel->Elevate(DeltaRotator.Pitch);
 	Turret->Rotate(DeltaRotator.Yaw);
 }
+
+void UTankAimingComponent::Fire()
+{
+	bool isReloaded = (FPlatformTime::Seconds() - LastFiredTime) > ReloadTimeInSeconds;
+
+	if (!ensure(Barrel && ProjectileBluePrint) || !isReloaded) return;
+
+	auto Projectile = GetWorld()->SpawnActor<AProjectile>(
+		ProjectileBluePrint,
+		Barrel->GetSocketLocation(FName("FiringPoint")),
+		Barrel->GetSocketRotation(FName("FiringPoint"))
+		);
+
+	Projectile->LaunchProjectile(LaunchSpeed);
+	LastFiredTime = FPlatformTime::Seconds();
+}

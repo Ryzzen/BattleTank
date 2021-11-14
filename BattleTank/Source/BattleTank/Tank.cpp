@@ -9,24 +9,3 @@ ATank::ATank()
  	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = false;
 }
-
-void ATank::BeginPlay()
-{
-	Super::BeginPlay(); // Calls BP  BeginPlay()
-}
-
-void ATank::Fire()
-{
-	bool isReloaded = (FPlatformTime::Seconds() - LastFiredTime) > ReloadTimeInSeconds;
-
-	if (!ensure(Barrel) || !isReloaded) return;
-
-	auto Projectile = GetWorld()->SpawnActor<AProjectile>(
-		ProjectileBluePrint,
-		Barrel->GetSocketLocation(FName("FiringPoint")),
-		Barrel->GetSocketRotation(FName("FiringPoint"))
-	);
-
-	// Projectile->LaunchProjectile(LaunchSpeed);
-	LastFiredTime = FPlatformTime::Seconds();
-}
