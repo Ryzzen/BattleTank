@@ -9,7 +9,7 @@ UTankAimingComponent::UTankAimingComponent()
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
 	// off to improve performance if you don't need them.
 	PrimaryComponentTick.bCanEverTick = true;
-
+	LastFiredTime = FPlatformTime::Seconds();
 	// ...
 }
 
@@ -17,6 +17,7 @@ UTankAimingComponent::UTankAimingComponent()
 void UTankAimingComponent::BeginPlay()
 {
 	Super::BeginPlay();
+	LastFiredTime = FPlatformTime::Seconds();
 }
 
 void UTankAimingComponent::Initialise(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet)
@@ -59,18 +60,24 @@ void UTankAimingComponent::MoveTurretSystem(const FVector& AimDirection)
 	Turret->Rotate(DeltaRotator.Yaw);
 }
 
+void UTankAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
+{
+	if ((FPlatformTime::Seconds() - LastFiredTime) > ReloadTimeInSeconds)
+		FiringState = EFiringState::Reloading;
+}
+
 void UTankAimingComponent::Fire()
 {
-	bool isReloaded = (FPlatformTime::Seconds() - LastFiredTime) > ReloadTimeInSeconds;
+	if (!ensure(Barrel && ProjectileBluePrint)) return;
 
-	if (!ensure(Barrel && ProjectileBluePrint) || !isReloaded) return;
+	if (FiringState != EFiringState::Reloading) {
+		auto Projectile = GetWorld()->SpawnActor<AProjectile>(
+			ProjectileBluePrint,
+			Barrel->GetSocketLocation(FName("FiringPoint")),
+			Barrel->GetSocketRotation(FName("FiringPoint"))
+			);
 
-	auto Projectile = GetWorld()->SpawnActor<AProjectile>(
-		ProjectileBluePrint,
-		Barrel->GetSocketLocation(FName("FiringPoint")),
-		Barrel->GetSocketRotation(FName("FiringPoint"))
-		);
-
-	Projectile->LaunchProjectile(LaunchSpeed);
-	LastFiredTime = FPlatformTime::Seconds();
+		Projectile->LaunchProjectile(LaunchSpeed);
+		LastFiredTime = FPlatformTime::Seconds();
+	}
 }
