@@ -20,7 +20,8 @@ void ATankAIController::Tick(float DeltaTime)
 
 	// Aiming part
 	AimingComponent->AimAt(PlayerTank->GetActorLocation());
-	AimingComponent->Fire();
+	if (AimingComponent->GetFiringState() == EFiringState::Locked)
+		AimingComponent->Fire();
 
 //	UE_LOG(LogTemp, Warning, TEXT("fires at %s"), *(PlayerTank->GetActorLocation().ToString()));
 }
