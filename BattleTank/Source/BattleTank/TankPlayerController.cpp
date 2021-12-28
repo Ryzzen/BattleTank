@@ -8,11 +8,16 @@ void ATankPlayerController::AimTowardsCrosshair()
 	if (!GetPawn()) { return;  }
 
 	auto AimingComponent = GetPawn()->FindComponentByClass<UTankAimingComponent>();
-	if (ensure(AimingComponent)) { FoundAimingComponent(AimingComponent); }
+	if (!ensure(AimingComponent)) { return; }
+
+	FoundAimingComponent(AimingComponent);
 
 	FVector HitLocation;
 
-	if (GetSightRayHitLocation(HitLocation)) {
+	bool bGotHitLocation = GetSightRayHitLocation(HitLocation);
+	UE_LOG(LogTemp, Warning, TEXT("Result %i"), bGotHitLocation)
+
+	if (bGotHitLocation) {
 		AimingComponent->AimAt(HitLocation);
 	}
 }
@@ -54,8 +59,9 @@ bool ATankPlayerController::GetSightRayHitLocation(FVector &HitLocation) const
 {
 	FVector AimDirection;
 
-	GetAimDirection(AimDirection);
-	return (GetAimVectorHitLocation(HitLocation, AimDirection));
+	if (GetAimDirection(AimDirection))
+		return (GetAimVectorHitLocation(HitLocation, AimDirection));
+	return false;
 }
 
 void ATankPlayerController::Tick(float DeltaTime)
@@ -68,7 +74,8 @@ void ATankPlayerController::Tick(float DeltaTime)
 void ATankPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
-	
+	if (!GetPawn()) { return;  }
+
 	auto AimingComponent = GetPawn()->FindComponentByClass<UTankAimingComponent>();
 	if (ensure(AimingComponent)) { FoundAimingComponent(AimingComponent); }
 }

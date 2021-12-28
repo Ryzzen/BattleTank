@@ -51,6 +51,7 @@ void UTankAimingComponent::AimAt(FVector Target)
 		ESuggestProjVelocityTraceOption::DoNotTrace
 	);
 	AimDirection = OutLaunchVelocity.GetSafeNormal();
+	UE_LOG(LogTemp, Warning, TEXT("AimDirection = %s"), *AimDirection.ToString());
 	MoveTurretSystem(AimDirection);
 }
 
@@ -64,6 +65,8 @@ void UTankAimingComponent::MoveTurretSystem(const FVector& Target)
 	auto DeltaRotator = AimAsRotator - BarrelRotator;
 
 	Barrel->Elevate(DeltaRotator.Pitch);
+	if (FMath::Abs(DeltaRotator.Yaw) > 180)
+		DeltaRotator.Yaw = -(DeltaRotator.Yaw);
 	Turret->Rotate(DeltaRotator.Yaw);
 }
 

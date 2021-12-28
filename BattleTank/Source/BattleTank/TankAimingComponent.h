@@ -58,7 +58,7 @@ private:
 	UTankTurret* Turret = nullptr;
 
 	UPROPERTY(EditDefaultsOnly, Category = Firing)
-	float LaunchSpeed = 4000; // TODO: Playtest default value
+	float LaunchSpeed = 100000; // TODO: Playtest default value
 
 	UPROPERTY(EditDefaultsOnly, Category = Setup)
 	TSubclassOf<AProjectile> ProjectileBluePrint;
